@@ -24,11 +24,43 @@ body {
 }
 
 .ball {
-    width: 20px;
-    height: 20px;
-    background-color: #ff0000;
+    width: 15px;
+    height: 15px;
     border-radius: 50%; /* Круглая форма */
     position: absolute;
+}
+
+.main-ball {
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, #ff0000, #ff6666); /* Красный градиент */
+    animation: changeGradient 3s infinite; /* Анимация градиента и пульсации */
+    z-index: 2; /* Основной шарик поверх следов */
+}
+
+.trail {
+    border-radius: 50%; /* Круглая форма */
+    position: absolute;
+    pointer-events: none; /* Чтобы следы не мешали взаимодействию */
+    z-index: 1; /* Следы под основным шариком */
+}
+  
+@keyframes changeGradient {
+    0% {
+      background: radial-gradient(circle, #ff0000, #ff6666); /* Красный градиент */
+    }
+    25% {
+      background: radial-gradient(circle, #00ff00, #66ff66); /* Зеленый градиент */
+    }
+    50% {
+      background: radial-gradient(circle, #0000ff, #6666ff); /* Синий градиент */
+    }
+    75% {
+      background: radial-gradient(circle, #ff00ff, #ff66ff); /* Фиолетовый градиент */
+    }
+    100% {
+      background: radial-gradient(circle, #ff0000, #ff6666); /* Красный градиент */
+    }
 }
 
 .controls {
@@ -59,5 +91,9 @@ button:hover {
     .ball {
       width: 30px; /* Увеличиваем размер шарика */
       height: 30px;
+    }
+    .main-ball {
+        width: 60px; /* Увеличиваем размер основного шарика */
+        height: 60px;
     }
   }
