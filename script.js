@@ -1,9 +1,11 @@
 const frame = document.querySelector('.frame');
 const ball = document.querySelector('.ball');
+const startStopButton = document.getElementById('startStopButton');
+const resetButton = document.getElementById('resetButton');
 
 // Получаем размеры рамки и шарика
-const frameRect = frame.getBoundingClientRect();
-const ballRect = ball.getBoundingClientRect();
+let frameRect = frame.getBoundingClientRect();
+let ballRect = ball.getBoundingClientRect();
 
 let ballX = Math.random() * (frameRect.width - ballRect.width); // Начальная позиция шарика по X
 let ballY = Math.random() * (frameRect.height - ballRect.height); // Начальная позиция шарика по Y
@@ -16,6 +18,46 @@ let ballSpeedY = Math.random() < 0.5 ? -speedY : speedY;
 // Устанавливаем начальное положение шарика
 ball.style.left = `${ballX}px`;
 ball.style.top = `${ballY}px`;
+
+let animationId = null; // Идентификатор анимации
+
+// Функция для запуска/остановки анимации
+function toggleAnimation() {
+    if (animationId === null) {
+      // Если анимация остановлена, запускаем её
+      moveBall();
+      startStopButton.textContent = 'Стоп';
+    } else {
+      // Если анимация запущена, останавливаем её
+      cancelAnimationFrame(animationId);
+      animationId = null;
+      startStopButton.textContent = 'Старт';
+    }
+}
+
+// Функция для перезагрузки анимации
+function resetAnimation() {
+    // Останавливаем текущую анимацию
+    if (animationId !== null) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  
+    // Сбрасываем позицию и направление шарика
+    frameRect = frame.getBoundingClientRect();
+    ballRect = ball.getBoundingClientRect();
+    ballX = Math.random() * (frameRect.width - ballRect.width);
+    ballY = Math.random() * (frameRect.height - ballRect.height);
+    ballSpeedX = Math.random() < 0.5 ? -speedX : speedX;
+    ballSpeedY = Math.random() < 0.5 ? -speedY : speedY;
+  
+    // Устанавливаем начальное положение шарика
+    ball.style.left = `${ballX}px`;
+    ball.style.top = `${ballY}px`;
+  
+    // Переключаем кнопку "Старт/Стоп" в состояние "Старт"
+    startStopButton.textContent = 'Старт';
+}
 
 function moveBall() {
   // Получаем текущие размеры рамки (на случай изменения размера окна)
@@ -63,8 +105,12 @@ function moveBall() {
   ball.style.top = `${ballY}px`;
 
   // Рекурсивно вызываем функцию для анимации
-  requestAnimationFrame(moveBall);
+  animationId = requestAnimationFrame(moveBall);
 }
 
+// Назначаем обработчики событий для кнопок
+startStopButton.addEventListener('click', toggleAnimation);
+resetButton.addEventListener('click', resetAnimation);
+
 // Запускаем анимацию
-moveBall();
+startStopButton.textContent = 'Старт';
