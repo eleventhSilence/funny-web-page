@@ -12,22 +12,33 @@ body {
 
 /* Стили для рамки */
 .frame {
-    width: 90%; /* Ширина рамки */
-    max-width: 800px; /* Максимальная ширина */
-    padding: 20px;
+    width: 300px; /* Фиксированная ширина */
+    aspect-ratio: 1 / 1; /* Соотношение сторон 1:1 (квадрат) */
+    position: relative;
     background-color: #ffffff;
     border: 2px solid #333333;
     border-radius: 10px; /* Закругленные углы */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень */
+    overflow: hidden; /* Чтобы шарик не выходил за пределы рамки */
 }
 
-/* Стили для контента внутри рамки */
-.frame h1 {
-    margin-top: 0;
-    color: #333333;
+.ball {
+    width: 20px;
+    height: 20px;
+    background-color: #ff0000;
+    border-radius: 50%; /* Круглая форма */
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-.frame p {
-    color: #555555;
-    line-height: 1.6;
-}
+/* Увеличение размеров на компьютере */
+@media (min-width: 768px) {
+    .frame {
+      width: 500px; /* Увеличиваем размер рамки на компьютере */
+    }
+    .ball {
+      width: 30px; /* Увеличиваем размер шарика */
+      height: 30px;
+    }
+  }
